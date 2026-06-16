@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimized Daily Routine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1A365D;
+            --teal: #0D9488;
+            --slate: #475569;
+            --charcoal: #1E293B;
+            --lightgray: #F8FAFC;
+            --bordergray: #E2E8F0;
+            --accent: #eef2f6;
+            --font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            color: var(--charcoal);
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--bordergray);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--navy);
+            margin: 0 0 10px 0;
+            font-size: 2.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            color: var(--slate);
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .metadata {
+            color: var(--slate);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .summary-box {
+            background-color: var(--lightgray);
+            border: 1px solid var(--bordergray);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .summary-item {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .summary-item h3 {
+            color: var(--navy);
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+        }
+
+        .summary-item p {
+            margin: 0;
+            color: var(--slate);
+            font-weight: 500;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: var(--navy);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border: 1px solid var(--bordergray);
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--navy);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--lightgray);
+        }
+
+        tr:hover {
+            background-color: var(--accent);
+        }
+
+        .center-text {
+            text-align: center;
+        }
+
+        .day-block {
+            margin-bottom: 30px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid var(--bordergray);
+            overflow: hidden;
+        }
+
+        .day-header {
+            background-color: var(--navy);
+            color: white;
+            padding: 12px 20px;
+            margin: 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .timeline {
+            padding: 20px;
+            margin: 0;
+            list-style: none;
+        }
+
+        .timeline li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .timeline li::before {
+            content: '■';
+            color: var(--teal);
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 0.8em;
+        }
+
+        .time-slot {
+            font-weight: 700;
+            color: var(--charcoal);
+            display: inline-block;
+            width: 130px;
+        }
+
+        .task-title {
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .sleep-label {
+            color: var(--slate);
+            font-weight: 600;
+        }
+
+        .sub-list {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            list-style-type: circle;
+            padding-left: 40px;
+            color: var(--slate);
+        }
+        
+        .sub-list li::before {
+            display: none;
+        }
+
+        .rules-list {
+            padding-left: 20px;
+            color: var(--charcoal);
+        }
+
+        .rules-list li {
+            margin-bottom: 15px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                max-width: 100%;
+            }
+            .day-block {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .summary-item {
+                flex: 1 1 100%;
+            }
+            .time-slot {
+                display: block;
+                width: auto;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Optimized Academic & Daily Routine</h1>
+            <p class="subtitle">BSc in NAOE (8th Semester) | Polyphasic Sleep & Skill-Up Protocol</p>
+            <p class="metadata">Batch 5th — Room 402, Meghna Building | Generated on June 16, 2026</p>
+        </header>
+
+        <div class="summary-box">
+            <div class="summary-item">
+                <h3>Core Sleep Blocks</h3>
+                <p>Night: 00:00 – 04:00 (4h)</p>
+                <p>Day: 15:00 – 19:00 (4h)</p>
+            </div>
+            <div class="summary-item">
+                <h3>IELTS Preparation</h3>
+                <p>30 Minutes Daily</p>
+                <p>Target Band: 7.5+</p>
+            </div>
+            <div class="summary-item">
+                <h3>Tech Specialization</h3>
+                <p>Bug Bounty Training</p>
+                <p>Duration: 2 Hours Daily</p>
+            </div>
+        </div>
+
+        <section>
+            <h2>I. Weekly Master Schedule Grid</h2>
+            <p style="color: var(--slate); margin-bottom: 15px;">This grid displays how your university classes fit seamlessly with your daily sleep cycles, study targets, and core security training.</p>
+            
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <th class="center-text">00:00 – 04:00</th>
+                            <th class="center-text">09:00 – 14:00</th>
+                            <th class="center-text">15:00 – 19:00</th>
+                            <th class="center-text">19:00 – 21:30</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sunday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">NAOE 4000 (Thesis) & Flex</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">NAOE Core & Free Block</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tuesday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">NAOE Core Classes (till 2 PM)</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wednesday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">NAOE Core Classes (till 2 PM)</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thursday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">NAOE Core Classes (till 2 PM)</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Friday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">Self-Directed Coding</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Saturday</strong></td>
+                            <td class="center-text">Night Sleep</td>
+                            <td class="center-text">Lab / Project Syncs</td>
+                            <td class="center-text">Day Sleep</td>
+                            <td class="center-text">Bug Bounty & IELTS</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section>
+            <h2>II. Day-by-Day Implementation Timelines</h2>
+
+            <div class="day-block">
+                <h3 class="day-header">Sunday (Thesis Research & Foundation Day)</h3>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span> — Establish deep circadian recovery.</li>
+                    <li><span class="time-slot">04:00 – 09:00</span> <span class="task-title">Early Morning Focus</span> — Thesis setup, literature reviews, or advanced OS customization.</li>
+                    <li><span class="time-slot">09:00 – 10:00</span> <span class="task-title">Commute / Transition</span> — Travel to the Department of NAOE.</li>
+                    <li><span class="time-slot">10:00 – 12:00</span> <span class="task-title">NAOE 4000: Thesis (Room 402)</span> — Academic focus, meetings with supervisors.</li>
+                    <li><span class="time-slot">12:00 – 15:00</span> <span class="task-title">Commute & Free Study</span> — Head home, lunch, and thesis documentation.</li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span> — Mandatory 4-hour cognitive recharge.</li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Core focus on Web Application Security, OWASP Top 10, or PortSwigger labs.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Alternating daily focus (e.g., Listening or Speaking strategies).</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Evening Flex</span> — Dinner, general engineering studies, administrative tasks, and pre-sleep winding down.</li>
+                </ul>
+            </div>
+
+            <div class="day-block">
+                <h3 class="day-header">Monday (High Academic Load)</h3>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span></li>
+                    <li><span class="time-slot">04:00 – 08:00</span> <span class="task-title">Personal Coding & Development</span> — Scripting (Python/Bash) for security tool automation.</li>
+                    <li><span class="time-slot">08:00 – 09:00</span> <span class="task-title">Commute</span> — Head to campus.</li>
+                    <li><span class="time-slot">09:00 – 12:00</span> <span class="task-title">NAOE Core Lectures</span>
+                        <ul class="sub-list">
+                            <li>09:00 – 10:00: NAOE 4223 (Recycling of Marine Structures)</li>
+                            <li>10:00 – 11:00: NAOE 4217 (Offshore Survey, Drilling & Production)</li>
+                            <li>11:00 – 12:00: NAOE 4219 (Riser & Mooring Systems)</li>
+                        </ul>
+                    </li>
+                    <li><span class="time-slot">12:00 – 15:00</span> <span class="task-title">Commute & Midday Break</span> — Return home, light meal, and light prep.</li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span></li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Practical hands-on exploitation, CTF labs, or setting up target reconnaissance.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Reading comprehension tests or practice essay outlines.</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Engineering Review & Dinner</span> — Homework assignments, marine structures study, and prep.</li>
+                </ul>
+            </div>
+
+            <div class="day-block">
+                <h3 class="day-header">Tuesday (Management, Control & Extended Classes)</h3>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span></li>
+                    <li><span class="time-slot">04:00 – 08:00</span> <span class="task-title">Open Research / Reading</span> — Diving into threat intelligence, RFC reports, or system design.</li>
+                    <li><span class="time-slot">08:00 – 09:00</span> <span class="task-title">Commute</span> — Travel to Meghna Building.</li>
+                    <li><span class="time-slot">09:00 – 14:00</span> <span class="task-title">NAOE Core Lectures & Extended Academic Block</span>
+                        <ul class="sub-list">
+                            <li>09:00 – 10:00: NAOE 4221 (Engineering Management)</li>
+                            <li>10:00 – 11:00: NAOE 4219 (Riser & Mooring Systems)</li>
+                            <li>11:00 – 12:00: NAOE 4233 (Control Engineering)</li>
+                            <li>12:00 – 14:00: Extended Labs / Class Requirements</li>
+                        </ul>
+                    </li>
+                    <li><span class="time-slot">14:00 – 15:00</span> <span class="task-title">Commute & Quick Refuel</span></li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span></li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Vulnerability scanning, Burp Suite exercises, and active network reconnaissance.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Speaking practice (recording yourself explaining NAOE concepts or security news).</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Dinner, Project Work & Relaxation</span></li>
+                </ul>
+            </div>
+
+            <div class="day-block">
+                <h3 class="day-header">Wednesday (Safety, Management & Extended Classes)</h3>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span></li>
+                    <li><span class="time-slot">04:00 – 08:00</span> <span class="task-title">Technical Lab Work</span> — Writing security tool configurations or processing thesis data.</li>
+                    <li><span class="time-slot">08:00 – 09:00</span> <span class="task-title">Commute</span></li>
+                    <li><span class="time-slot">09:00 – 14:00</span> <span class="task-title">NAOE Core Lectures & Extended Academic Block</span>
+                        <ul class="sub-list">
+                            <li>09:00 – 10:00: NAOE 4200 (Safety & Survival Training)</li>
+                            <li>10:00 – 11:00: NAOE 4223 (Recycling of Marine Structures)</li>
+                            <li>11:00 – 12:00: NAOE 4221 (Engineering Management)</li>
+                            <li>12:00 – 14:00: Extended Labs / Class Requirements</li>
+                        </ul>
+                    </li>
+                    <li><span class="time-slot">14:00 – 15:00</span> <span class="task-title">Commute & Transition</span></li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span></li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Bug hunting on active public/private HackerOne programs.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Grammar review and vocabulary logging.</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Dinner & Review</span> — Keep class review light. Prioritize early wind down.</li>
+                </ul>
+            </div>
+
+            <div class="day-block">
+                <h3 class="day-header">Thursday (Extended Classes — Shift to Weekend Mode)</h3>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span></li>
+                    <li><span class="time-slot">04:00 – 08:00</span> <span class="task-title">Deep Project Coding</span> — Open timeline for software development or thesis drafting.</li>
+                    <li><span class="time-slot">08:00 – 09:00</span> <span class="task-title">Commute</span></li>
+                    <li><span class="time-slot">09:00 – 14:00</span> <span class="task-title">NAOE Core Lectures & Extended Academic Block</span>
+                        <ul class="sub-list">
+                            <li>09:00 – 10:00: NAOE 4233 (Control Engineering)</li>
+                            <li>10:00 – 11:00: NAOE 4217 (Offshore Survey, Drilling & Production)</li>
+                            <li>11:00 – 14:00: Extended Labs / Class Requirements</li>
+                        </ul>
+                    </li>
+                    <li><span class="time-slot">14:00 – 15:00</span> <span class="task-title">Commute & Prep</span> — Quick stop on campus, travel home, and lunch.</li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span></li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Writing exploit payloads, reporting findings, or checking write-ups.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Reviewing mock feedback or checking task-2 essays.</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Dinner & Leisure</span> — Enjoy the evening, check up on latest tech blogs, watch videos.</li>
+                </ul>
+            </div>
+
+            <div class="day-block">
+                <h3 class="day-header">Friday & Saturday (High-Efficiency Personal Deep-Dive)</h3>
+                <div style="padding: 15px 20px; background-color: #f0fdfa; border-bottom: 1px solid var(--bordergray); color: var(--teal); font-weight: 500;">
+                    Maintain the exact same sleep patterns to keep your internal biological clock aligned and stable.
+                </div>
+                <ul class="timeline">
+                    <li><span class="time-slot">00:00 – 04:00</span> <span class="sleep-label">Night Sleep (Block A)</span></li>
+                    <li><span class="time-slot">04:00 – 15:00</span> <span class="task-title">Prime Uninterrupted Focus Window</span>
+                        <ul class="sub-list">
+                            <li><em>Academic/Professional Integration:</em> Draft your thesis reports.</li>
+                            <li><em>Extended Labs:</em> In-depth code reviews, building security automation tools, or virtual machines deployment.</li>
+                            <li><em>Personal Care:</em> Exercise, outdoor exploration, and family time.</li>
+                        </ul>
+                    </li>
+                    <li><span class="time-slot">15:00 – 19:00</span> <span class="sleep-label">Day Sleep (Block B)</span> — <em>Do not skip</em> on weekends to preserve sleep hygiene.</li>
+                    <li><span class="time-slot">19:00 – 21:00</span> <span class="task-title">Bug Bounty Learning</span> — Deep-dives, reading complex disclosures, or analyzing CVEs.</li>
+                    <li><span class="time-slot">21:00 – 21:30</span> <span class="task-title">IELTS Preparation</span> — Comprehensive full mock tests (timed sections).</li>
+                    <li><span class="time-slot">21:30 – 00:00</span> <span class="task-title">Social & Recreational</span> — Time off, gaming, community engagement, or social events.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>III. Protocol Execution Rules</h2>
+            <ol class="rules-list">
+                <li><strong>The Polyphasic Sleep Golden Rule:</strong> The split schedule requires precision. Do not swap sleep blocks around or stay awake longer during the weekend. Keep sleep zones (00:00–04:00 and 15:00–19:00) fixed. Use blackout curtains for the afternoon block.</li>
+                <li><strong>The 19:00 Awakening Rule:</strong> Set an alarm for 19:00. As soon as you wake, immediately sit at your desk to study Bug Bounty. Your mind is fresh and cleared from university cognitive overload. Do not touch social media during this transition.</li>
+                <li><strong>IELTS Micro-Habit:</strong> 30 minutes flies by. Focus strictly on one skill block a day to make maximum impact. Record your progress weekly.</li>
+            </ol>
+        </section>
+        
+        <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+             <button onclick="window.print()" style="background-color: var(--teal); color: white; border: none; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 6px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                Print or Save as PDF
+            </button>
+        </div>
+
+    </div>
+</body>
+</html>
